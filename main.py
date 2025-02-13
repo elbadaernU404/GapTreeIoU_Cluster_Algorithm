@@ -25,7 +25,7 @@ PR = os.path.dirname(__file__)
 font_file = os.path.join(PR, 'font/SourceHanSansCN-Medium.otf')
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-model = YOLO(os.path.join(PR, "models/hg_doclaynet_yolo_imgsz1120.pt"))
+model = YOLO(os.path.join(PR, "models/hg_doclaynet_yolo11x_imgsz1120.pt"))
 
 
 class StructureOCR:

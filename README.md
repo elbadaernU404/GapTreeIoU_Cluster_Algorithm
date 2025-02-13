@@ -8,7 +8,7 @@
 
 <font color='gold'>❷</font> **基于YOLO的版面分析算法；**
 
-<font color='gold'>❸</font> **OCR box和 YOLO layoutbox之间的交并比聚类算法**
+<font color='gold'>❸</font> **OCR box和YOLO layoutbox之间的交并比聚类算法**
 
 <font color='gold'>**GTIoUC解决的问题：**</font>
 
@@ -49,6 +49,21 @@ conda activate py39_gtiouc
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
+### 安装模型
+
+模型下载地址：<https://huggingface.co/elbadaernU/hg_doclaynet_yolo_imgsz1120/tree/main>
+
+| model   | name                                                         |
+| ------- | ------------------------------------------------------------ |
+| yolo11n | [**hg_doclaynet_yolo11n_imgsz1120.pt**](<https://huggingface.co/elbadaernU/hg_doclaynet_yolo_imgsz1120/blob/main/hg_doclaynet_yolo11n_imgsz1120.pt>) |
+| yolo11x | [**hg_doclaynet_yolo11x_imgsz1120.pt**](<https://huggingface.co/elbadaernU/hg_doclaynet_yolo_imgsz1120/blob/main/hg_doclaynet_yolo11x_imgsz1120.pt>) |
+
+下载后将模型放入`models`文件夹，再去main.py中修改模型（默认使用yolo11x模型）：
+
+```python
+model = YOLO(os.path.join(PR, "models/hg_doclaynet_yolo11x_imgsz1120.pt"))
+```
+
 ### 执行`main.py`脚本
 
 在`__main__`脚本中添加自己的OCR api地址。如果暂无api接口可以使用内置的文件进行测试，目前仅支持`10.png`。
@@ -71,25 +86,16 @@ DocLayNet（<https://github.com/DS4SD/DocLayNet>），选择`Doclaynet core data
 
 数据集共包括十种常见的文档板块类型：
 
-**· Captain：**大标题
-
-**· Footnote：**脚注
-
-**· Formula：**公式
-
-**· List-item：**表格/列表项
-
-**· Page-footer：**页脚
-
-**· Page-header：**页眉
-
-**· Picture：**图像
-
-**· Section-header：**章节标题
-
-**· Table：**表格
-
-**· Title：**小标题
+- **Captain**：大标题
+- **Footnote**：脚注
+- **Formula**：公式
+- **List-item**：表格/列表项
+- **Page-footer**：页脚
+- **Page-header**：页眉
+- **Picture**：图像
+- **Section-header**：章节标题
+- **Table**：表格
+- **Title**：小标题
 
 #### yaml
 
@@ -430,11 +436,11 @@ class VisualizeOCR:
 
 **<font color='gold'>{</font>**
 
-**<font color='gold'>① (y-b)*x=l</font>**
+**<font color='gold'>① (y-b)\*x=l</font>**
 
-**<font color='gold'>② x*s = w</font>**
+**<font color='gold'>② x\*s = w</font>**
 
-**<font color='gold'>③ y*s = h</font>**
+**<font color='gold'>③ y\*s = h</font>**
 
 **<font color='gold'>{</font>**
 
