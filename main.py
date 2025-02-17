@@ -292,6 +292,8 @@ def get_layout_img(image, api_url, lang):
         layout_figures_list = [i.get('layout_box') for i in layout_figures]
         for i, layout_result in enumerate(layout_results):
             paragraph = grouped_layout_blocks.get(i)
+            if not paragraph:
+                continue
             layout_paragraphs.append({"paragraph": "".join(paragraph), "layout_box": layout_result.get("layout_box")})
         layout_paragraphs.extend(un_layout_blocks)
         layout_paragraphs_list = [i.get('paragraph') for i in layout_paragraphs]
