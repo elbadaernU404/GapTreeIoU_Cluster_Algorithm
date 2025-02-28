@@ -70,11 +70,10 @@ class VisualizeOCR:
         # 按规定宽度分组
         max_line_height, total_lines = 0, 0
         allText = []
-        for sen in sentence.split('\n'):
-            paragraph_content, line_height, line_count = self.get_paragraph(sen, width, font)
-            max_line_height = max(line_height, max_line_height)
-            total_lines += line_count
-            allText.append((paragraph_content, line_count))
+        paragraph_content, line_height, line_count = self.get_paragraph(sentence, width, font)
+        max_line_height = max(line_height, max_line_height)
+        total_lines += line_count
+        allText.append((paragraph_content, line_count))
         line_height = max_line_height
         total_height = total_lines * line_height
         return allText, total_height, line_height
@@ -274,11 +273,14 @@ def get_layout_img(image, api_url, lang):
                 iou_area = intersection.area if not intersection.is_empty else 0
                 iou_set.append((i, iou_area, line.get('text')))
 
-            iou_set = sorted(iou_set, key=lambda x: x[1])[-1]
-            # 为板块添加在其内部的OCR文本块
-            if iou_set[1] > 0:
-                layout_blocks.append((iou_set[0], iou_set[2]))
-            # 额外处理不在任何板块内的OCR文本块
+            if iou_set:
+                iou_set = sorted(iou_set, key=lambda x: x[1])[-1]
+                # 为板块添加在其内部的OCR文本块
+                if iou_set[1] > 0:
+                    layout_blocks.append((iou_set[0], iou_set[2]))
+                # 额外处理不在任何板块内的OCR文本块
+                else:
+                    un_layout_blocks.append({"paragraph": line.get('text'), "layout_box": line.get('box')})
             else:
                 un_layout_blocks.append({"paragraph": line.get('text'), "layout_box": line.get('box')})
 
